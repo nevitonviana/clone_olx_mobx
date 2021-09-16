@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:olx_clone/screens/home/home_screen.dart';
+
+import '../home/home_screen.dart';
 
 class BaseScreen extends StatelessWidget {
   const BaseScreen({Key? key}) : super(key: key);

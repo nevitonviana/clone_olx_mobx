@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
-import 'screens/base_scren/base_screen.dart';
+import 'screens/base/base_screen.dart';
+
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
