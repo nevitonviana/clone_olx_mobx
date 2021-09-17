@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
+import '/stores/login_store/login_store.dart';
 import '../signup/signup_creen.dart';
-
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final LoginStoreController _loginStoreController = LoginStoreController();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Entrar"),
@@ -52,12 +53,17 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    TextField(
-                      decoration: InputDecoration(
-                        border: const OutlineInputBorder(),
-                        isDense: true,
+                    Observer(
+                      builder: (_) => TextField(
+                        onChanged: _loginStoreController.setEmail,
+                        enabled: !_loginStoreController.loading,
+                        decoration: InputDecoration(
+                          errorText: _loginStoreController.emailError,
+                          border: const OutlineInputBorder(),
+                          isDense: true,
+                        ),
+                        keyboardType: TextInputType.emailAddress,
                       ),
-                      keyboardType: TextInputType.emailAddress,
                     ),
                     const SizedBox(height: 16),
                     Padding(
@@ -90,24 +96,36 @@ class LoginScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    TextField(
-                      decoration: InputDecoration(
-                        border: const OutlineInputBorder(),
-                        isDense: true,
+                    Observer(
+                      builder: (_) => TextField(
+                        onChanged: _loginStoreController.setPassWord,
+                        enabled: !_loginStoreController.loading,
+                        decoration: InputDecoration(
+                          errorText: _loginStoreController.passwordError,
+                          border: const OutlineInputBorder(),
+                          isDense: true,
+                        ),
+                        obscureText: true,
                       ),
-                      obscureText: true,
                     ),
                     Container(
                       height: 40,
                       margin: const EdgeInsets.only(top: 20, bottom: 12),
-                      child: MaterialButton(
-                        onPressed: () {},
-                        color: Colors.orangeAccent,
-                        child: Text("ENTRAR"),
-                        textColor: Colors.white,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
+                      child: Observer(
+                        builder: (context) => MaterialButton(
+                          onPressed: _loginStoreController.loginPressed,
+                          color: Colors.orangeAccent,
+                          disabledColor: Colors.orange.shade100,
+                          child: _loginStoreController.loading
+                              ? CircularProgressIndicator(
+                                  color: Colors.blue,
+                                )
+                              : Text("ENTRAR"),
+                          textColor: Colors.white,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
                         ),
                       ),
                     ),
