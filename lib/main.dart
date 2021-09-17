@@ -14,7 +14,6 @@ void main() async {
 
 void setupLocators() {
   GetIt.I.registerSingleton(PageStoreController());
-
 }
 
 Future<void> initializeParse() async {
@@ -34,7 +33,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'OLX Clone',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.purple,
+        scaffoldBackgroundColor: Colors.purple,
+        appBarTheme: AppBarTheme(
+          elevation: 0,
+        ),
+        primaryColor: Colors.purple,
       ),
       home: BaseScreen(),
     );
