@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
+import '/stores/signup_store/signup_store.dart';
 import '../signup/components/field_title.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -9,6 +11,9 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final SignupStoreController _signupStoreController =
+        SignupStoreController();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Cadastro"),
@@ -34,13 +39,18 @@ class SignUpScreen extends StatelessWidget {
                         title: "Apelido",
                         subtitle: "como aparecerá em seus anuncios",
                       ),
-                      TextField(
-                        decoration: InputDecoration(
-                          isDense: true,
-                          border: OutlineInputBorder(),
-                          hintText: "EX: João",
-                        ),
-                      ),
+                      Observer(builder: (context) {
+                        return TextField(
+                          enabled: !_signupStoreController.loading,
+                          onChanged: _signupStoreController.setName,
+                          decoration: InputDecoration(
+                            errorText: _signupStoreController.nameError,
+                            isDense: true,
+                            border: OutlineInputBorder(),
+                            hintText: "EX: João",
+                          ),
+                        );
+                      }),
                       const SizedBox(
                         height: 16,
                       ),
@@ -48,13 +58,18 @@ class SignUpScreen extends StatelessWidget {
                         title: "E-mail",
                         subtitle: "Eniaremos um E-mail de confirmação",
                       ),
-                      TextField(
-                        decoration: InputDecoration(
-                          isDense: true,
-                          border: OutlineInputBorder(),
-                          hintText: "EX: João@hotmail.comn",
+                      Observer(
+                        builder: (context) => TextField(
+                          onChanged: _signupStoreController.setEmail,
+                          enabled: !_signupStoreController.loading,
+                          decoration: InputDecoration(
+                            errorText: _signupStoreController.emailError,
+                            isDense: true,
+                            border: OutlineInputBorder(),
+                            hintText: "EX: João@hotmail.comn",
+                          ),
+                          autocorrect: false,
                         ),
-                        autocorrect: false,
                       ),
                       const SizedBox(
                         height: 16,
@@ -63,16 +78,21 @@ class SignUpScreen extends StatelessWidget {
                         title: "Celular",
                         subtitle: "proteja sua conta",
                       ),
-                      TextField(
-                        keyboardType: TextInputType.number,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                          TelefoneInputFormatter(),
-                        ],
-                        decoration: InputDecoration(
-                          isDense: true,
-                          border: OutlineInputBorder(),
-                          hintText: "EX: (11) 9 1111-1111",
+                      Observer(
+                        builder: (context) => TextField(
+                          keyboardType: TextInputType.number,
+                          enabled: !_signupStoreController.loading,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                            TelefoneInputFormatter(),
+                          ],
+                          onChanged: _signupStoreController.setPhone,
+                          decoration: InputDecoration(
+                            errorText: _signupStoreController.phoneError,
+                            isDense: true,
+                            border: OutlineInputBorder(),
+                            hintText: "EX: (99) 9 9999-9999",
+                          ),
                         ),
                       ),
                       const SizedBox(height: 16),
@@ -80,10 +100,15 @@ class SignUpScreen extends StatelessWidget {
                         title: "Senha",
                         subtitle: "use letras, numeros e caracteres especiais",
                       ),
-                      TextField(
-                        decoration: InputDecoration(
-                          isDense: true,
-                          border: OutlineInputBorder(),
+                      Observer(
+                        builder: (context) => TextField(
+                          onChanged: _signupStoreController.setPassWord1,
+                          enabled: !_signupStoreController.loading,
+                          decoration: InputDecoration(
+                            errorText: _signupStoreController.passWordError1,
+                            isDense: true,
+                            border: OutlineInputBorder(),
+                          ),
                         ),
                       ),
                       const SizedBox(height: 16),
@@ -91,25 +116,37 @@ class SignUpScreen extends StatelessWidget {
                         title: "Confirmar Senha",
                         subtitle: "repita a senha",
                       ),
-                      TextField(
-                        decoration: InputDecoration(
-                          isDense: true,
-                          border: OutlineInputBorder(),
+                      Observer(
+                        builder: (context) => TextField(
+                          onChanged: _signupStoreController.setPassWord2,
+                          enabled: !_signupStoreController.loading,
+                          decoration: InputDecoration(
+                            errorText: _signupStoreController.passwordError2,
+                            isDense: true,
+                            border: OutlineInputBorder(),
+                          ),
                         ),
                       ),
                       Container(
                         height: 40,
                         margin: const EdgeInsets.only(top: 20, bottom: 12),
-                        child: MaterialButton(
-                          onPressed: () {},
-                          color: Colors.orangeAccent,
-                          child: Text("ENTRAR"),
-                          textColor: Colors.white,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
+                        child: Observer(builder: (context) {
+                          return MaterialButton(
+                            onPressed: _signupStoreController.signupPressed,
+                            disabledColor: Colors.orange.shade200,
+                            color: Colors.orangeAccent,
+                            child: _signupStoreController.loading
+                                ? CircularProgressIndicator(
+                                    color: Colors.blue,
+                                  )
+                                : Text("ENTRAR"),
+                            textColor: Colors.white,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          );
+                        }),
                       ),
                       Divider(
                         color: Colors.black,
