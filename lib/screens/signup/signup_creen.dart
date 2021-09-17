@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:olx_clone/components/error_box/error_box.dart';
 
 import '/stores/signup_store/signup_store.dart';
 import '../signup/components/field_title.dart';
@@ -35,6 +36,9 @@ class SignUpScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
+                      Observer(builder: (_) =>ErrorBox(
+                        massage: _signupStoreController.error,
+                      ) ,),
                       FieldTitle(
                         title: "Apelido",
                         subtitle: "como aparecerá em seus anuncios",
