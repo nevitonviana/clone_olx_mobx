@@ -1,5 +1,7 @@
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
+import '/stores/user_manager_store/user_manager_store.dart';
 import '/repositories/user_repositories/user_repository.dart';
 import '../../helpers/extensions.dart';
 
@@ -48,6 +50,7 @@ abstract class _LoginStoreControllerBase with Store {
     try {
       final user = await UserSignUpRepositories()
           .loginWithToUser(email: email!, password: password!);
+      GetIt.I<UserManagerStoreController>().setUser(user);
     } catch (e) {
       error = e.toString();
     }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:olx_clone/stores/page_store/page_store.dart';
 
+import '/stores/user_manager_store/user_manager_store.dart';
 import '/screens/login/login_screen.dart';
 
 class CustomDrawerHeader extends StatelessWidget {
@@ -7,12 +10,19 @@ class CustomDrawerHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final UserManagerStoreController _userManagerStoreController =
+        GetIt.I<UserManagerStoreController>();
+
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pop();
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (_) => LoginScreen(),
-        ));
+        if (_userManagerStoreController.isLoggedIn) {
+          GetIt.I<PageStoreController>().setPage(4);
+        } else {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (_) => LoginScreen(),
+          ));
+        }
       },
       child: Container(
         color: Colors.purple,
@@ -33,7 +43,9 @@ class CustomDrawerHeader extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Acess sua conta agora!",
+                  _userManagerStoreController.isLoggedIn
+                      ? _userManagerStoreController.user!.name!
+                      : "Acess sua conta agora!",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
@@ -42,7 +54,9 @@ class CustomDrawerHeader extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  "Clique Aqui",
+                  _userManagerStoreController.isLoggedIn
+                      ? _userManagerStoreController.user!.email!
+                      : "Clique Aqui",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 14,
