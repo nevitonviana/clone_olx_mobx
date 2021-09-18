@@ -1,4 +1,3 @@
-
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 import '/repositories/parse_errors/parse_errors.dart';
@@ -32,7 +31,8 @@ class UserSignUpRepositories {
     );
   }
 
-  Future<User> loginWithToUser({required String email, required String password})async{
+  Future<User> loginWithToUser(
+      {required String email, required String password}) async {
     final parseUser = ParseUser(email, password, null);
     final response = await parseUser.login();
 
@@ -44,4 +44,18 @@ class UserSignUpRepositories {
     }
   }
 
+  Future<User?> currentUser() async {
+    final parseUser = await ParseUser.currentUser();
+    if (parseUser != null) {
+      final response =
+          await ParseUser.getCurrentUserFromServer(parseUser.sessionToken);
+      if (response!.success) {
+        return mapParseToUser(response.result);
+      } else {
+        await parseUser.logout();
+      }
+    } else {
+      return null;
+    }
+  }
 }
