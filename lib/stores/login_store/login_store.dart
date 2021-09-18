@@ -1,5 +1,6 @@
 import 'package:mobx/mobx.dart';
 
+import '/repositories/user_repositories/user_repository.dart';
 import '../../helpers/extensions.dart';
 
 part 'login_store.g.dart';
@@ -35,13 +36,21 @@ abstract class _LoginStoreControllerBase with Store {
   @observable
   bool loading = false;
 
+  @observable
+  String? error;
+
   @computed
   dynamic get loginPressed =>
       (emailValid && passwordValid && !loading) ? _login : null;
 
   Future<void> _login() async {
     loading = true;
-    await Future.delayed(Duration(seconds: 3));
+    try {
+      final user = await UserSignUpRepositories()
+          .loginWithToUser(email: email!, password: password!);
+    } catch (e) {
+      error = e.toString();
+    }
     loading = false;
   }
 }

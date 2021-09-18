@@ -1,7 +1,7 @@
 import 'package:mobx/mobx.dart';
 
 import '/models/user/user.dart';
-import '/repositories/user_repositories/user_repositories.dart';
+import '../../repositories/user_repositories/user_repository.dart';
 import '../../helpers/extensions.dart';
 
 part 'signup_store.g.dart';
@@ -120,7 +120,7 @@ abstract class _SignupStoreControllerBase with Store {
     loading = true;
 
     try {
-      final resultUser = await UserRepositories().signUp(user: user);
+      final resultUser = await UserSignUpRepositories().signUp(user: user);
     } catch (e) {
       error = e.toString();
     }

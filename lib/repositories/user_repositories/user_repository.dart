@@ -1,10 +1,11 @@
+
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 import '/repositories/parse_errors/parse_errors.dart';
 import '/models/user/user.dart';
 import '/repositories/table_keys.dart';
 
-class UserRepositories {
+class UserSignUpRepositories {
   Future<User?> signUp({required User user}) async {
     final parseUser = ParseUser(user.email, user.password, user.email);
     parseUser.set<String?>(keyUserName, user.name);
@@ -30,4 +31,17 @@ class UserRepositories {
       createdAt: parseUser.get(keyUserCreatedAt),
     );
   }
+
+  Future<User> loginWithToUser({required String email, required String password})async{
+    final parseUser = ParseUser(email, password, null);
+    final response = await parseUser.login();
+
+    if (response.success) {
+      return mapParseToUser(parseUser);
+    } else {
+      return Future.error(
+          ParseErrors.getDescription(response.error!.code).toString());
+    }
+  }
+
 }

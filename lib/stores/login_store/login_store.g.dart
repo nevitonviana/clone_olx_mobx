@@ -76,6 +76,21 @@ mixin _$LoginStoreController on _LoginStoreControllerBase, Store {
     });
   }
 
+  final _$errorAtom = Atom(name: '_LoginStoreControllerBase.error');
+
+  @override
+  String? get error {
+    _$errorAtom.reportRead();
+    return super.error;
+  }
+
+  @override
+  set error(String? value) {
+    _$errorAtom.reportWrite(value, super.error, () {
+      super.error = value;
+    });
+  }
+
   final _$_LoginStoreControllerBaseActionController =
       ActionController(name: '_LoginStoreControllerBase');
 
@@ -107,6 +122,7 @@ mixin _$LoginStoreController on _LoginStoreControllerBase, Store {
 email: ${email},
 password: ${password},
 loading: ${loading},
+error: ${error},
 emailValid: ${emailValid},
 passwordValid: ${passwordValid},
 loginPressed: ${loginPressed}

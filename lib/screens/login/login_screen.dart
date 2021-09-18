@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
+import '/components/error_box/error_box.dart';
 import '/stores/login_store/login_store.dart';
 import '../signup/signup_creen.dart';
 
@@ -31,6 +32,11 @@ class LoginScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    Observer(
+                      builder: (_) => ErrorBox(
+                        massage: _loginStoreController.error,
+                      ),
+                    ),
                     Text(
                       "Acessar com E-mail:",
                       style: TextStyle(
