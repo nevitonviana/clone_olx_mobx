@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
-import 'stores/user_manager_store/user_manager_store.dart';
+import 'initializeParse.dart';
 import 'screens/base/base_screen.dart';
 import 'stores/page_store/page_store.dart';
+import 'stores/user_manager_store/user_manager_store.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await initializeParse();
+  await InitializeParse().initializeParse();
   setupLocators();
   runApp(MyApp());
 }
@@ -16,16 +16,6 @@ void main() async {
 void setupLocators() {
   GetIt.I.registerSingleton(PageStoreController());
   GetIt.I.registerSingleton(UserManagerStoreController());
-}
-
-Future<void> initializeParse() async {
-  await Parse().initialize(
-    "JGDuC8xZFjChAX1OObHXYjNDXZ1llaoIqcU7ACT5",
-    "https://parseapi.back4app.com/",
-    clientKey: "sh6XbjF0hopF8nCPOy3fMleFQyV2kkuts1wpABOa",
-    autoSendSessionId: true,
-    debug: true,
-  );
 }
 
 class MyApp extends StatelessWidget {

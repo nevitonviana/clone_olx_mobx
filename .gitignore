@@ -33,7 +33,7 @@ build
 android
 ios
 .dart_tool
-
+lib/initializeParse.dart
 
 # Web related
 lib/generated_plugin_registrant.dart
