@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 
 import 'initializeParse.dart';
 import 'screens/base/base_screen.dart';
+import 'stores/category_store/category_store.dart';
 import 'stores/page_store/page_store.dart';
 import 'stores/user_manager_store/user_manager_store.dart';
 
@@ -16,6 +17,7 @@ void main() async {
 void setupLocators() {
   GetIt.I.registerSingleton(PageStoreController());
   GetIt.I.registerSingleton(UserManagerStoreController());
+  GetIt.I.registerSingleton(CategoryStoreController());
 }
 
 class MyApp extends StatelessWidget {
