@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:olx_clone/screens/category_screen/category_screen.dart';
 
 import 'initializeParse.dart';
-import 'screens/base/base_screen.dart';
 import 'stores/category_store/category_store.dart';
 import 'stores/page_store/page_store.dart';
 import 'stores/user_manager_store/user_manager_store.dart';
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         ),
         primaryColor: Colors.purple,
       ),
-      home: BaseScreen(),
+      home: CategoryScreen(),
     );
   }
 }

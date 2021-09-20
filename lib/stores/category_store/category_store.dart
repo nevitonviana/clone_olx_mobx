@@ -26,7 +26,7 @@ abstract class _CategoryStoreControllerBase with Store {
   @action
   void setError(String value) => error = value;
 
-  Future<void> _loadCategories() async {
+  Future<void> _loajdCategories() async {
     try {
       final categories = await CategoryRepository().getList();
       setCategories(categories);
@@ -34,4 +34,8 @@ abstract class _CategoryStoreControllerBase with Store {
       setError(e.toString());
     }
   }
+
+  @computed
+  List<Category> get allCategoryList => List.from(categoryList)
+    ..insert(0, Category(id: '*', description: 'todas'));
 }
