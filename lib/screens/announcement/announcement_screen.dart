@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '/components/custom_drawer/custom_drawer.dart';
+import '/stores/announcement_store/announcement_store.dart';
 import 'conponents/images_field.dart';
 
 class AnnouncementScreen extends StatelessWidget {
@@ -10,6 +11,9 @@ class AnnouncementScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AnnouncementStoreController _announcementStoreController =
+        AnnouncementStoreController();
+
     final labelStyle = TextStyle(
       fontWeight: FontWeight.w800,
       color: Colors.grey,
@@ -33,7 +37,9 @@ class AnnouncementScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              ImagesField(),
+              ImagesField(
+                announcementStoreController: _announcementStoreController,
+              ),
               TextFormField(
                 decoration: InputDecoration(
                   labelText: "Titulo *",

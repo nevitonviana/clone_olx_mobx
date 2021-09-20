@@ -11,22 +11,25 @@ class ImageSourceModel extends StatelessWidget {
   ImageSourceModel({Key? key, required this.onImageSelected}) : super(key: key);
 
   final ImagePicker _picker = ImagePicker();
+  late File fileImage;
 
   Future<void> getFromCamera() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.camera);
     if (image == null) return;
+    fileImage = File(image.path);
     imageSelected(image);
   }
 
   Future<void> getFromGallery() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
     if (image == null) return;
+    fileImage = File(image.path);
     imageSelected(image);
   }
 
-  Future<void> imageSelected(XFile xFile) async {
+  Future<void> imageSelected(XFile file) async {
     final croppedFile = await ImageCropper.cropImage(
-      sourcePath: xFile.path,
+      sourcePath: file.path,
       aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
       androidUiSettings: AndroidUiSettings(
           toolbarTitle: 'Editar Image',
@@ -38,7 +41,7 @@ class ImageSourceModel extends StatelessWidget {
         doneButtonTitle: 'Concluir',
       ),
     );
-    onImageSelected(croppedFile!);
+    if (croppedFile != null) onImageSelected(croppedFile);
   }
 
   @override
