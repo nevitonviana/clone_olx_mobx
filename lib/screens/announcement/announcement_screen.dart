@@ -1,6 +1,7 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:olx_clone/screens/announcement/conponents/category_field.dart';
 
 import '/components/custom_drawer/custom_drawer.dart';
 import '/stores/announcement_store/announcement_store.dart';
@@ -55,6 +56,8 @@ class AnnouncementScreen extends StatelessWidget {
                 ),
                 maxLines: null,
               ),
+              CategoryField(
+                  announcementStoreController: _announcementStoreController),
               TextFormField(
                 keyboardType: TextInputType.number,
                 inputFormatters: [
