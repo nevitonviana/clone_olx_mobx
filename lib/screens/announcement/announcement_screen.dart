@@ -1,12 +1,13 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:olx_clone/screens/announcement/conponents/category_field.dart';
 
 import '/components/custom_drawer/custom_drawer.dart';
 import '/stores/announcement_store/announcement_store.dart';
-import 'conponents/cep_field.dart';
-import 'conponents/images_field.dart';
+import 'components/category_field.dart';
+import 'components/cep_field.dart';
+import 'components/hide_phone_field.dart';
+import 'components/images_field.dart';
 
 class AnnouncementScreen extends StatelessWidget {
   const AnnouncementScreen({Key? key}) : super(key: key);
@@ -37,6 +38,7 @@ class AnnouncementScreen extends StatelessWidget {
           ),
           elevation: 9,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
             children: [
               ImagesField(
@@ -72,6 +74,21 @@ class AnnouncementScreen extends StatelessWidget {
                   contentPadding: contentPadding,
                   prefixText: 'R\$ ',
                 ),
+              ),
+              HidePhoneField(
+                announcementStoreController: _announcementStoreController,
+              ),
+              MaterialButton(
+                onPressed: () {},
+                child: Text(
+                  "Enviar",
+                  style: TextStyle(fontSize: 18),
+                ),
+                height: 50,
+                textColor: Colors.white,
+                disabledColor: Colors.orange.withAlpha(120),
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                color: Colors.orange,
               ),
             ],
           ),
