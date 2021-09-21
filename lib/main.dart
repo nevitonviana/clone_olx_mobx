@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:olx_clone/repositories/ibge_repository/ibge_repository.dart';
 
+import '/repositories/ibge_repository/ibge_repository.dart';
 import '/screens/base/base_screen.dart';
 import 'initializeParse.dart';
 import 'stores/category_store/category_store.dart';
@@ -13,7 +13,9 @@ void main() async {
   await InitializeParse().initializeParse();
   setupLocators();
   runApp(MyApp());
-  print(IBGERepository().getUFListFromAPI().toString());
+  IBGERepository().getUFList().then((value) {
+    IBGERepository().getUFList().then((value) => print(value));
+  });
 }
 
 void setupLocators() {
