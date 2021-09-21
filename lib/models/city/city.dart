@@ -8,4 +8,9 @@ class City {
         id: json["id"],
         name: json["nome"],
       );
+
+  @override
+  String toString() {
+    return 'City{id: $id, name: $name}';
+  }
 }
