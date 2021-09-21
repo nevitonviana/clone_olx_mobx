@@ -5,6 +5,7 @@ import 'package:olx_clone/screens/announcement/conponents/category_field.dart';
 
 import '/components/custom_drawer/custom_drawer.dart';
 import '/stores/announcement_store/announcement_store.dart';
+import 'conponents/cep_field.dart';
 import 'conponents/images_field.dart';
 
 class AnnouncementScreen extends StatelessWidget {
@@ -58,6 +59,7 @@ class AnnouncementScreen extends StatelessWidget {
               ),
               CategoryField(
                   announcementStoreController: _announcementStoreController),
+              CepField(),
               TextFormField(
                 keyboardType: TextInputType.number,
                 inputFormatters: [

@@ -3,7 +3,6 @@ import 'package:get_it/get_it.dart';
 
 import '/screens/base/base_screen.dart';
 import 'initializeParse.dart';
-import 'repositories/cep_respository/cep_respository.dart';
 import 'stores/category_store/category_store.dart';
 import 'stores/page_store/page_store.dart';
 import 'stores/user_manager_store/user_manager_store.dart';
@@ -13,9 +12,6 @@ void main() async {
   await InitializeParse().initializeParse();
   setupLocators();
   runApp(MyApp());
-  CepRepository()
-      .getAddressFrommAPI('13.087-000')
-      .then((value) => print(value));
 }
 
 void setupLocators() {
