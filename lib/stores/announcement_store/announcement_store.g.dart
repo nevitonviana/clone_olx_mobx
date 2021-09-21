@@ -9,6 +9,63 @@ part of 'announcement_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$AnnouncementStoreController on _AnnouncementStoreControllerBase, Store {
+  Computed<bool>? _$categoryValidComputed;
+
+  @override
+  bool get categoryValid =>
+      (_$categoryValidComputed ??= Computed<bool>(() => super.categoryValid,
+              name: '_AnnouncementStoreControllerBase.categoryValid'))
+          .value;
+  Computed<Address?>? _$addressComputed;
+
+  @override
+  Address? get address =>
+      (_$addressComputed ??= Computed<Address?>(() => super.address,
+              name: '_AnnouncementStoreControllerBase.address'))
+          .value;
+  Computed<bool>? _$titleValidComputed;
+
+  @override
+  bool get titleValid =>
+      (_$titleValidComputed ??= Computed<bool>(() => super.titleValid,
+              name: '_AnnouncementStoreControllerBase.titleValid'))
+          .value;
+  Computed<bool>? _$descriptionValidComputed;
+
+  @override
+  bool get descriptionValid => (_$descriptionValidComputed ??= Computed<bool>(
+          () => super.descriptionValid,
+          name: '_AnnouncementStoreControllerBase.descriptionValid'))
+      .value;
+  Computed<bool>? _$priceValidComputed;
+
+  @override
+  bool get priceValid =>
+      (_$priceValidComputed ??= Computed<bool>(() => super.priceValid,
+              name: '_AnnouncementStoreControllerBase.priceValid'))
+          .value;
+  Computed<bool>? _$imagesValidComputed;
+
+  @override
+  bool get imagesValid =>
+      (_$imagesValidComputed ??= Computed<bool>(() => super.imagesValid,
+              name: '_AnnouncementStoreControllerBase.imagesValid'))
+          .value;
+  Computed<bool>? _$formValidComputed;
+
+  @override
+  bool get formValid =>
+      (_$formValidComputed ??= Computed<bool>(() => super.formValid,
+              name: '_AnnouncementStoreControllerBase.formValid'))
+          .value;
+  Computed<dynamic>? _$sendPressedComputed;
+
+  @override
+  dynamic get sendPressed =>
+      (_$sendPressedComputed ??= Computed<dynamic>(() => super.sendPressed,
+              name: '_AnnouncementStoreControllerBase.sendPressed'))
+          .value;
+
   final _$categoryAtom =
       Atom(name: '_AnnouncementStoreControllerBase.category');
 
@@ -41,6 +98,69 @@ mixin _$AnnouncementStoreController on _AnnouncementStoreControllerBase, Store {
     });
   }
 
+  final _$titleAtom = Atom(name: '_AnnouncementStoreControllerBase.title');
+
+  @override
+  String get title {
+    _$titleAtom.reportRead();
+    return super.title;
+  }
+
+  @override
+  set title(String value) {
+    _$titleAtom.reportWrite(value, super.title, () {
+      super.title = value;
+    });
+  }
+
+  final _$descriptionAtom =
+      Atom(name: '_AnnouncementStoreControllerBase.description');
+
+  @override
+  String get description {
+    _$descriptionAtom.reportRead();
+    return super.description;
+  }
+
+  @override
+  set description(String value) {
+    _$descriptionAtom.reportWrite(value, super.description, () {
+      super.description = value;
+    });
+  }
+
+  final _$priceTextAtom =
+      Atom(name: '_AnnouncementStoreControllerBase.priceText');
+
+  @override
+  String get priceText {
+    _$priceTextAtom.reportRead();
+    return super.priceText;
+  }
+
+  @override
+  set priceText(String value) {
+    _$priceTextAtom.reportWrite(value, super.priceText, () {
+      super.priceText = value;
+    });
+  }
+
+  final _$showErrorsAtom =
+      Atom(name: '_AnnouncementStoreControllerBase.showErrors');
+
+  @override
+  bool get showErrors {
+    _$showErrorsAtom.reportRead();
+    return super.showErrors;
+  }
+
+  @override
+  set showErrors(bool value) {
+    _$showErrorsAtom.reportWrite(value, super.showErrors, () {
+      super.showErrors = value;
+    });
+  }
+
   final _$_AnnouncementStoreControllerBaseActionController =
       ActionController(name: '_AnnouncementStoreControllerBase');
 
@@ -69,10 +189,71 @@ mixin _$AnnouncementStoreController on _AnnouncementStoreControllerBase, Store {
   }
 
   @override
+  void setTitle(String value) {
+    final _$actionInfo = _$_AnnouncementStoreControllerBaseActionController
+        .startAction(name: '_AnnouncementStoreControllerBase.setTitle');
+    try {
+      return super.setTitle(value);
+    } finally {
+      _$_AnnouncementStoreControllerBaseActionController
+          .endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setDescription(String value) {
+    final _$actionInfo = _$_AnnouncementStoreControllerBaseActionController
+        .startAction(name: '_AnnouncementStoreControllerBase.setDescription');
+    try {
+      return super.setDescription(value);
+    } finally {
+      _$_AnnouncementStoreControllerBaseActionController
+          .endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setPrice(String value) {
+    final _$actionInfo = _$_AnnouncementStoreControllerBaseActionController
+        .startAction(name: '_AnnouncementStoreControllerBase.setPrice');
+    try {
+      return super.setPrice(value);
+    } finally {
+      _$_AnnouncementStoreControllerBaseActionController
+          .endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void invalidSendPressed() {
+    final _$actionInfo =
+        _$_AnnouncementStoreControllerBaseActionController.startAction(
+            name: '_AnnouncementStoreControllerBase.invalidSendPressed');
+    try {
+      return super.invalidSendPressed();
+    } finally {
+      _$_AnnouncementStoreControllerBaseActionController
+          .endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 category: ${category},
-hidePhone: ${hidePhone}
+hidePhone: ${hidePhone},
+title: ${title},
+description: ${description},
+priceText: ${priceText},
+showErrors: ${showErrors},
+categoryValid: ${categoryValid},
+address: ${address},
+titleValid: ${titleValid},
+descriptionValid: ${descriptionValid},
+priceValid: ${priceValid},
+imagesValid: ${imagesValid},
+formValid: ${formValid},
+sendPressed: ${sendPressed}
     ''';
   }
 }
