@@ -1,8 +1,12 @@
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
-import 'package:olx_clone/models/address/address.dart';
 
+import '/models/address/address.dart';
 import '/models/category/category.dart';
+import '/models/model_announcement/model_announcement.dart';
+import '/repositories/announcement_repository/announcement_repository.dart';
 import '/stores/cep_store/cep_store.dart';
+import '/stores/user_manager_store/user_manager_store.dart';
 
 part 'announcement_store.g.dart';
 
@@ -131,5 +135,17 @@ abstract class _AnnouncementStoreControllerBase with Store {
   @computed
   dynamic get sendPressed => formValid ? _send : null;
 
-  void _send() {}
+  void _send() {
+    final createdAnnouncement = ModelAnnouncement();
+    createdAnnouncement.title = title;
+    createdAnnouncement.description = description;
+    createdAnnouncement.category = category!;
+    createdAnnouncement.price = priceText;
+    createdAnnouncement.hidePhone = hidePhone;
+    createdAnnouncement.images = images;
+    createdAnnouncement.address = address!;
+    createdAnnouncement.user = GetIt.I<UserManagerStoreController>().user!;
+
+    AnnouncementRepository().save(modelAnnouncement: createdAnnouncement);
+  }
 }
