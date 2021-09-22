@@ -15,7 +15,6 @@ class ModelAnnouncement {
   bool? hidePhone;
   AnnouncementStatus announcementStatus = AnnouncementStatus.PENDING;
   DateTime? createdDate;
-  Address? address;
   User? user;
   int? views;
 }
