@@ -30,8 +30,8 @@
 .pub-cache/
 .pub/
 build
-android
-ios
+android/
+ios/
 .dart_tool
 lib/initializeParse.dart
 
