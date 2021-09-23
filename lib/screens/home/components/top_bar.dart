@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:olx_clone/screens/category_screen/category_screen.dart';
+import 'package:olx_clone/screens/filter/filter.dart';
 import 'package:olx_clone/stores/home_store/home_store.dart';
 
 import 'BarButton.dart';
@@ -24,7 +25,6 @@ class TopBar extends StatelessWidget {
                   ),
                 ),
               );
-
               if (category != null) _homeStoreController.setCategory(category);
             },
             label: _homeStoreController.category?.description ?? 'Categoria',
@@ -49,7 +49,11 @@ class TopBar extends StatelessWidget {
             ),
           ),
           label: "Filtros",
-          voidCallback: () {},
+          voidCallback: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => FilterScreen()),
+            );
+          },
         ),
       ],
     );
