@@ -5,6 +5,7 @@ import 'package:olx_clone/stores/home_store/home_store.dart';
 
 import '/components/custom_drawer/custom_drawer.dart';
 import 'components/search_dialog.dart';
+import 'components/top_bar.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -68,6 +69,11 @@ class HomeScreen extends StatelessWidget {
               ),
             );
           }),
+        ],
+      ),
+      body: Column(
+        children: [
+          TopBar(),
         ],
       ),
     );
