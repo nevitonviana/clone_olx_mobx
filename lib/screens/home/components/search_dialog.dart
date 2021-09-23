@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class SearchDialog extends StatelessWidget {
-  final String? currentSearch;
+  final String currentSearch;
 
-  SearchDialog({Key? key, this.currentSearch})
+  SearchDialog({Key? key, required this.currentSearch})
       : controller = TextEditingController(text: currentSearch);
   final TextEditingController controller;
 

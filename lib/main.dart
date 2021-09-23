@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:olx_clone/stores/home_store/home_store.dart';
 
 import '/screens/base/base_screen.dart';
 import 'initializeParse.dart';
@@ -16,6 +17,7 @@ void main() async {
 
 void setupLocators() {
   GetIt.I.registerSingleton(PageStoreController());
+  GetIt.I.registerSingleton(HomeStoreController());
   GetIt.I.registerSingleton(UserManagerStoreController());
   GetIt.I.registerSingleton(CategoryStoreController());
 }
