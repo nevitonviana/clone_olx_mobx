@@ -135,7 +135,17 @@ abstract class _AnnouncementStoreControllerBase with Store {
   @computed
   dynamic get sendPressed => formValid ? _send : null;
 
-  void _send() {
+  @observable
+  bool loading = false;
+
+  @observable
+  bool saveAnnouncement = false;
+
+  @observable
+  String error = "";
+
+  @action
+  Future<void> _send() async {
     final createdAnnouncement = ModelAnnouncement();
     createdAnnouncement.title = title;
     createdAnnouncement.description = description;
@@ -146,6 +156,15 @@ abstract class _AnnouncementStoreControllerBase with Store {
     createdAnnouncement.address = address!;
     createdAnnouncement.user = GetIt.I<UserManagerStoreController>().user!;
 
-    AnnouncementRepository().save(modelAnnouncement: createdAnnouncement);
+    loading = true;
+    try {
+      await AnnouncementRepository()
+          .save(modelAnnouncement: createdAnnouncement);
+      saveAnnouncement = true;
+    } catch (e) {
+      error = e.toString();
+    }
+
+    loading = false;
   }
 }

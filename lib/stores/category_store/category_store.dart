@@ -1,6 +1,7 @@
 import 'package:mobx/mobx.dart';
-import 'package:olx_clone/models/category/category.dart';
-import 'package:olx_clone/repositories/category_repository/category_repository.dart';
+
+import '/models/category/category.dart';
+import '/repositories/category_repository/category_repository.dart';
 
 part 'category_store.g.dart';
 
@@ -29,7 +30,7 @@ abstract class _CategoryStoreControllerBase with Store {
   Future<void> _loadCategories() async {
     try {
       final categories = await CategoryRepository().getList();
-      setCategories(categories);
+      setCategories(categories!);
     } catch (e) {
       setError(e.toString());
     }

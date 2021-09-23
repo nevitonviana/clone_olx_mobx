@@ -1,5 +1,6 @@
-import 'package:olx_clone/repositories/table_keys.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
+
+import '/repositories/table_keys.dart';
 
 class Category {
   final String id;
