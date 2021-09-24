@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:olx_clone/screens/category_screen/category_screen.dart';
-import 'package:olx_clone/screens/filter/filter.dart';
+import 'package:olx_clone/screens/filter/filter_screen.dart';
 import 'package:olx_clone/stores/home_store/home_store.dart';
 
 import 'BarButton.dart';

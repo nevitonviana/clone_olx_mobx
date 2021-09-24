@@ -32,18 +32,20 @@ class PriceRangeField extends StatelessWidget {
               label: "maix",
               onChanged: filterStoreController.setMaxPrice,
             ),
-            Observer(builder: (_) {
-              if (filterStoreController.priceError != null)
-                return Text(
-                  filterStoreController.priceError!,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.red,
-                  ),
-                );
-              return Container();
-            }),
           ],
+        ),
+        Observer(
+          builder: (_) {
+            if (filterStoreController.priceError != null)
+              return Text(
+                filterStoreController.priceError!,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.red,
+                ),
+              );
+            return Container();
+          },
         ),
       ],
     );

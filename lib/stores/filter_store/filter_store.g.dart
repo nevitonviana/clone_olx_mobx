@@ -16,6 +16,27 @@ mixin _$FilterStoreController on _FilterStoreControllerBase, Store {
       (_$priceErrorComputed ??= Computed<String?>(() => super.priceError,
               name: '_FilterStoreControllerBase.priceError'))
           .value;
+  Computed<bool>? _$isTypeParticularComputed;
+
+  @override
+  bool get isTypeParticular => (_$isTypeParticularComputed ??= Computed<bool>(
+          () => super.isTypeParticular,
+          name: '_FilterStoreControllerBase.isTypeParticular'))
+      .value;
+  Computed<bool>? _$isTypeProfessionalComputed;
+
+  @override
+  bool get isTypeProfessional => (_$isTypeProfessionalComputed ??=
+          Computed<bool>(() => super.isTypeProfessional,
+              name: '_FilterStoreControllerBase.isTypeProfessional'))
+      .value;
+  Computed<bool>? _$isFormValidComputed;
+
+  @override
+  bool get isFormValid =>
+      (_$isFormValidComputed ??= Computed<bool>(() => super.isFormValid,
+              name: '_FilterStoreControllerBase.isFormValid'))
+          .value;
 
   final _$orderByAtom = Atom(name: '_FilterStoreControllerBase.orderBy');
 
@@ -62,6 +83,21 @@ mixin _$FilterStoreController on _FilterStoreControllerBase, Store {
     });
   }
 
+  final _$vendorTypeAtom = Atom(name: '_FilterStoreControllerBase.vendorType');
+
+  @override
+  int get vendorType {
+    _$vendorTypeAtom.reportRead();
+    return super.vendorType;
+  }
+
+  @override
+  set vendorType(int value) {
+    _$vendorTypeAtom.reportWrite(value, super.vendorType, () {
+      super.vendorType = value;
+    });
+  }
+
   final _$_FilterStoreControllerBaseActionController =
       ActionController(name: '_FilterStoreControllerBase');
 
@@ -99,12 +135,27 @@ mixin _$FilterStoreController on _FilterStoreControllerBase, Store {
   }
 
   @override
+  void selectVendorType(int value) {
+    final _$actionInfo = _$_FilterStoreControllerBaseActionController
+        .startAction(name: '_FilterStoreControllerBase.selectVendorType');
+    try {
+      return super.selectVendorType(value);
+    } finally {
+      _$_FilterStoreControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 orderBy: ${orderBy},
 minPrice: ${minPrice},
 maxPrice: ${maxPrice},
-priceError: ${priceError}
+vendorType: ${vendorType},
+priceError: ${priceError},
+isTypeParticular: ${isTypeParticular},
+isTypeProfessional: ${isTypeProfessional},
+isFormValid: ${isFormValid}
     ''';
   }
 }

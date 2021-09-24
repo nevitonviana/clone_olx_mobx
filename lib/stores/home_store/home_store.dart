@@ -1,5 +1,7 @@
 import 'package:mobx/mobx.dart';
-import 'package:olx_clone/models/category/category.dart';
+
+import '/models/category/category.dart';
+import '/stores/filter_store/filter_store.dart';
 
 part 'home_store.g.dart';
 
@@ -17,4 +19,12 @@ abstract class _HomeStoreControllerBase with Store {
 
   @action
   void setCategory(Category value) => category = value;
+
+  FilterStoreController get cloneFilter => filter.clone();
+
+  @observable
+  FilterStoreController filter = FilterStoreController();
+
+  @action
+  void setFilter(FilterStoreController value) => filter = value;
 }
