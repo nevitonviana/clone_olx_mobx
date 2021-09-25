@@ -5,12 +5,18 @@ import 'package:get_it/get_it.dart';
 import '/components/custom_drawer/custom_drawer.dart';
 import '/stores/home_store/home_store.dart';
 import 'components/ad_tile.dart';
+import 'components/createAd_button.dart';
 import 'components/search_dialog.dart';
 import 'components/top_bar.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   _openSearch({required BuildContext context}) async {
     final search = await showDialog(
       context: context,
@@ -25,6 +31,8 @@ class HomeScreen extends StatelessWidget {
 
   final HomeStoreController _homeStoreController =
       GetIt.I<HomeStoreController>();
+
+  final ScrollController scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -76,82 +84,95 @@ class HomeScreen extends StatelessWidget {
         children: [
           TopBar(),
           Expanded(
-            child: Observer(
-              builder: (context) {
-                if (_homeStoreController.error != null) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Icon(
-                          Icons.error,
-                          color: Colors.white,
-                          size: 100,
+            child: Stack(
+              children: [
+                Observer(
+                  builder: (context) {
+                    if (_homeStoreController.error != null) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Icon(
+                              Icons.error,
+                              color: Colors.white,
+                              size: 100,
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              "Ocorreu um error",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                          "Ocorreu um error",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                }
-                if (_homeStoreController.showProgress) {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
-                    ),
-                  );
-                }
-                if (_homeStoreController.adList.isEmpty) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Icon(
-                          Icons.border_all_sharp,
-                          color: Colors.white,
-                          size: 100,
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                          "Humm.. Nenhum anuncio encontrado!!",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                }
-                return ListView.builder(
-                  itemCount: _homeStoreController.itemCount,
-                  itemBuilder: (context, index) {
-                    if (index < _homeStoreController.adList.length)
-                      return AdTile(
-                        announcementStoreController:
-                            _homeStoreController.adList[index],
                       );
-                    return Container(
-                      height: 10,
-                      child: LinearProgressIndicator(
-                        color: Colors.white,
-                      ),
+                    }
+                    if (_homeStoreController.showProgress) {
+                      return Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                        ),
+                      );
+                    }
+                    if (_homeStoreController.adList.isEmpty) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Icon(
+                              Icons.border_all_sharp,
+                              color: Colors.white,
+                              size: 100,
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              "Humm.. Nenhum anuncio encontrado!!",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                    return ListView.builder(
+                      controller: scrollController,
+                      itemCount: _homeStoreController.itemCount,
+                      itemBuilder: (context, index) {
+                        if (index < _homeStoreController.adList.length)
+                          return AdTile(
+                            announcementStoreController:
+                                _homeStoreController.adList[index],
+                          );
+                        return Container(
+                          height: 10,
+                          child: LinearProgressIndicator(
+                            color: Colors.white,
+                          ),
+                        );
+                      },
                     );
                   },
-                );
-              },
+                ),
+                Positioned(
+                  bottom: -50,
+                  left: 0,
+                  right: 0,
+                  child: CreateAdButton(
+                    scrollController: scrollController,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
