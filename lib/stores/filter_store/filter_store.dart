@@ -1,7 +1,4 @@
-import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
-
-import '/stores/home_store/home_store.dart';
 
 part 'filter_store.g.dart';
 
@@ -65,7 +62,7 @@ abstract class _FilterStoreControllerBase with Store {
   bool get isFormValid => priceError == null;
 
   void save() {
-    GetIt.I<HomeStoreController>().setFilter(this);
+    // GetIt.I<HomeStoreController>().setFilter(this);
   }
 
   FilterStoreController clone() {
