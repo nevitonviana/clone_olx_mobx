@@ -18,9 +18,9 @@ abstract class _HomeStoreControllerBase with Store {
           category: category,
           filter: filter,
           search: search,
+          page: page,
         );
-        adList.clear();
-        adList.add(newAnnouncement);
+        addNewAds(newAnnouncement);
         setLoading(false);
       } catch (e) {
         setError(e.toString());
@@ -35,6 +35,7 @@ abstract class _HomeStoreControllerBase with Store {
 
   @action
   void setError(String value) => error = value;
+
   @observable
   bool loading = false;
 
@@ -46,13 +47,19 @@ abstract class _HomeStoreControllerBase with Store {
   String search = '';
 
   @action
-  void setSearch(String value) => search = value;
+  void setSearch(String value) {
+    search = value;
+    resetPage();
+  }
 
   @observable
   Category? category;
 
   @action
-  void setCategory(Category value) => category = value;
+  void setCategory(Category value) {
+    category = value;
+    resetPage();
+  }
 
   FilterStoreController get cloneFilter => filter.clone();
 
@@ -60,5 +67,39 @@ abstract class _HomeStoreControllerBase with Store {
   FilterStoreController filter = FilterStoreController();
 
   @action
-  void setFilter(FilterStoreController value) => filter = value;
+  void setFilter(FilterStoreController value) {
+    filter = value;
+    resetPage();
+  }
+
+  @observable
+  int page = 0;
+
+  @action
+  void loadNextPage() {
+    page++;
+  }
+
+  @computed
+  int get itemCount => lastPage ? adList.length : adList.length + 1;
+
+  @observable
+  bool lastPage = false;
+
+  @action
+  void addNewAds(List<ModelAnnouncement>? newAds) {
+    if (newAds!.length < 10) {
+      lastPage = true;
+      adList.addAll(newAds);
+    }
+  }
+
+  void resetPage() {
+    page = 0;
+    adList.clear();
+    lastPage = false;
+  }
+
+  @computed
+  bool get showProgress => loading && adList.isEmpty;
 }

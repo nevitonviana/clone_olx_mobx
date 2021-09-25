@@ -103,7 +103,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                   );
                 }
-                if (_homeStoreController.loading) {
+                if (_homeStoreController.showProgress) {
                   return Center(
                     child: CircularProgressIndicator(
                       color: Colors.white,
@@ -136,11 +136,18 @@ class HomeScreen extends StatelessWidget {
                   );
                 }
                 return ListView.builder(
-                  itemCount: _homeStoreController.adList.length,
+                  itemCount: _homeStoreController.itemCount,
                   itemBuilder: (context, index) {
-                    return AdTile(
-                      announcementStoreController:
-                          _homeStoreController.adList[index],
+                    if (index < _homeStoreController.adList.length)
+                      return AdTile(
+                        announcementStoreController:
+                            _homeStoreController.adList[index],
+                      );
+                    return Container(
+                      height: 10,
+                      child: LinearProgressIndicator(
+                        color: Colors.white,
+                      ),
                     );
                   },
                 );

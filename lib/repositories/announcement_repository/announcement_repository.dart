@@ -87,8 +87,10 @@ class AnnouncementRepository {
   Future<List<ModelAnnouncement>?> getHomeAdList(
       {FilterStoreController? filter,
       String? search,
-      Category? category}) async {
+      Category? category,
+      int? page}) async {
     final queryBuilder = QueryBuilder<ParseObject>(ParseObject(keyAdTable));
+    queryBuilder.setAmountToSkip(page! * 20);
     queryBuilder.setLimit(20);
     queryBuilder.includeObject([keyAdOwner, keyAdCategory]);
     queryBuilder.whereEqualTo(keyAdStatus, AnnouncementStatus.ACTIVE.index);
