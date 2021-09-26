@@ -1,15 +1,15 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:olx_clone/models/category/category.dart';
-import 'package:olx_clone/models/user/user.dart';
-import 'package:olx_clone/stores/filter_store/filter_store.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 import 'package:path/path.dart' as path;
 
+import '/models/category/category.dart';
 import '/models/model_announcement/model_announcement.dart';
+import '/models/user/user.dart';
 import '/repositories/parse_errors/parse_errors.dart';
 import '/repositories/table_keys.dart';
+import '/stores/filter_store/filter_store.dart';
 
 class AnnouncementRepository {
   Future<void> save({required ModelAnnouncement modelAnnouncement}) async {
@@ -141,7 +141,29 @@ class AnnouncementRepository {
     } else if (response.success && response.results == null) {
       return [];
     } else {
-      Future.error(ParseErrors.getDescription(response.error!.code)!);
+      return Future.error(ParseErrors.getDescription(response.error!.code)!);
+    }
+  }
+
+  Future<List<ModelAnnouncement>> getMyAds(User user) async {
+    final currentUser = ParseUser("", "", "")..set(keyUserId, user.id);
+    final queryBuilder = QueryBuilder<ParseObject>(ParseObject(keyAdTable));
+
+    queryBuilder.setLimit(100);
+    queryBuilder.orderByDescending(keyAdCreatedAt);
+    queryBuilder.whereEqualTo(keyAdOwner, currentUser.toPointer());
+    queryBuilder.includeObject([keyAdCategory, keyAdOwner]);
+
+    final response = await queryBuilder.query();
+
+    if (response.success && response.results != null) {
+      return response.results!
+          .map((e) => ModelAnnouncement.fromParse(parseObject: e))
+          .toList();
+    } else if (response.success && response.results == null) {
+      return [];
+    } else {
+      return Future.error(ParseErrors.getDescription(response.error!.code)!);
     }
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:olx_clone/stores/myads_Store/myads_Store.dart';
 
 class MyAdsScreen extends StatefulWidget {
   const MyAdsScreen({Key? key}) : super(key: key);
@@ -10,6 +11,7 @@ class MyAdsScreen extends StatefulWidget {
 class _MyAdsScreenState extends State<MyAdsScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  final MyAdsStoreController _myAdsStoreController = MyAdsStoreController();
 
   @override
   void initState() {
@@ -36,6 +38,7 @@ class _MyAdsScreenState extends State<MyAdsScreen>
         ),
       ),
       body: TabBarView(
+        controller: _tabController,
         children: [
           Container(
             color: Colors.orangeAccent,

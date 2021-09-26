@@ -42,7 +42,6 @@ abstract class _HomeStoreControllerBase with Store {
   @action
   void setLoading(bool value) => loading = value;
 
-  @computed
   @observable
   String search = '';
 
