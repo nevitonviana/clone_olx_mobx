@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 
 import '/models/model_announcement/model_announcement.dart';
 
-class PendingTile extends StatelessWidget {
+class SoldTile extends StatelessWidget {
   final ModelAnnouncement modelAnnouncement;
 
-  const PendingTile({Key? key, required this.modelAnnouncement})
-      : super(key: key);
+  const SoldTile({Key? key, required this.modelAnnouncement}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,24 +40,30 @@ class PendingTile extends StatelessWidget {
                     Text(
                       modelAnnouncement.price.toString(),
                     ),
-                    ListTile(
-                      title: Text(
-                        "Aguardando Publicação",
-                        style: TextStyle(
-                          fontSize: 11,
-                          color: Colors.orangeAccent,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    Text(
+                      "Vendido",
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
                       ),
-                      leading: Icon(
-                        Icons.access_alarm_rounded,
-                        color: Colors.orangeAccent,
-                      ),
-                    )
+                    ),
                   ],
                 ),
               ),
             ),
+            Column(
+              children: [
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.delete_forever,
+                    color: Colors.red,
+                    size: 22,
+                  ),
+                ),
+              ],
+            )
           ],
         ),
       ),

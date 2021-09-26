@@ -72,7 +72,10 @@ class ActiveTile extends StatelessWidget {
                         break;
                     }
                   },
-                  icon: Icon(Icons.more_vert_rounded),
+                  icon: Icon(
+                    Icons.more_vert_rounded,
+                    color: Colors.purple,
+                  ),
                   itemBuilder: (context) {
                     return choice
                         .map(

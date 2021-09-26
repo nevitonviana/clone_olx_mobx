@@ -4,6 +4,7 @@ import 'package:olx_clone/stores/myads_Store/myads_Store.dart';
 
 import 'components/active_tile.dart';
 import 'components/pending_tile.dart';
+import 'components/sold_tile.dart';
 
 class MyAdsScreen extends StatefulWidget {
   const MyAdsScreen({Key? key}) : super(key: key);
@@ -66,7 +67,7 @@ class _MyAdsScreenState extends State<MyAdsScreen>
             if (_myAdsStoreController.soldAds.isEmpty) return Container();
             return ListView.builder(
               itemCount: _myAdsStoreController.soldAds.length,
-              itemBuilder: (_, index) => ActiveTile(
+              itemBuilder: (_, index) => SoldTile(
                 modelAnnouncement: _myAdsStoreController.allAds![index],
               ),
             );
