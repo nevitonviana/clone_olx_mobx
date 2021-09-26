@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_carousel_slider/carousel_slider.dart';
 
 import '/stores/announcement_store/announcement_store.dart';
+import 'components/bottoms_bar.dart';
 import 'components/description_panel.dart';
 import 'components/location_panel.dart';
 import 'components/main_panel.dart';
@@ -21,39 +22,50 @@ class AdScreen extends StatelessWidget {
         title: Text("Anuncios"),
         centerTitle: true,
       ),
-      body: ListView(
+      body: Stack(
         children: [
-          Container(
-            height: 280,
-            child: CarouselSlider.builder(
-                slideBuilder: (index) {
-                  return Container(
-                    child: Image.network(
-                      announcementStoreController.images[index],
-                    ),
-                  );
-                },
-                itemCount: announcementStoreController.images.length),
+          ListView(
+            children: [
+              Container(
+                height: 280,
+                child: CarouselSlider.builder(
+                    slideBuilder: (index) {
+                      return Container(
+                        child: Image.network(
+                          announcementStoreController.images[index],
+                        ),
+                      );
+                    },
+                    itemCount: announcementStoreController.images.length),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    MainPanel(
+                        announcementStoreController:
+                            announcementStoreController),
+                    Divider(color: Colors.grey),
+                    DescriptionPanel(
+                        announcementStoreController:
+                            announcementStoreController),
+                    Divider(color: Colors.grey),
+                    LocationPanel(
+                        announcementStoreController:
+                            announcementStoreController),
+                    Divider(color: Colors.grey),
+                    UserPanel(
+                        announcementStoreController:
+                            announcementStoreController),
+                    SizedBox(height: 120),
+                  ],
+                ),
+              ),
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                MainPanel(
-                    announcementStoreController: announcementStoreController),
-                Divider(color: Colors.grey),
-                DescriptionPanel(
-                    announcementStoreController: announcementStoreController),
-                Divider(color: Colors.grey),
-                LocationPanel(
-                    announcementStoreController: announcementStoreController),
-                Divider(color: Colors.grey),
-                UserPanel(
-                    announcementStoreController: announcementStoreController),
-                SizedBox(height: 16),
-              ],
-            ),
+          BottomsBar(
+            announcementStoreController: announcementStoreController,
           ),
         ],
       ),
