@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:olx_clone/screens/my_ads/my_ads.dart';
 
 import '/components/custom_drawer/custom_drawer.dart';
 
@@ -66,7 +67,9 @@ class AccountScreen extends StatelessWidget {
               ),
               Divider(),
               ListTile(
-                onTap: () {},
+                onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_) => MyAdsScreen(),
+                )),
                 title: Text(
                   "menus Anuncios",
                   style: TextStyle(
