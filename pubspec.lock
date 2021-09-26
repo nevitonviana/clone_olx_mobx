@@ -245,7 +245,7 @@ packages:
       name: dart_style
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.2.0"
   dbus:
     dependency: transitive
     description:
@@ -307,6 +307,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.2"
+  flutter_carousel_slider:
+    dependency: "direct main"
+    description:
+      name: flutter_carousel_slider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.8"
   flutter_localizations:
     dependency: "direct main"
     description: flutter
@@ -672,6 +679,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
+  readmore:
+    dependency: "direct main"
+    description:
+      name: readmore
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.0"
   rxdart:
     dependency: transitive
     description:
