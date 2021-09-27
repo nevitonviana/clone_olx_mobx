@@ -12,6 +12,18 @@ class AnnouncementStoreController = _AnnouncementStoreControllerBase
     with _$AnnouncementStoreController;
 
 abstract class _AnnouncementStoreControllerBase with Store {
+  _AnnouncementStoreControllerBase({this.modelAnnouncement}) {
+    title = modelAnnouncement!.title!;
+    description = modelAnnouncement!.description!;
+    images = images.asObservable();
+    category = modelAnnouncement!.category;
+    priceText = modelAnnouncement!.price.toString();
+    hidePhone = modelAnnouncement!.hidePhone!;
+    if (modelAnnouncement!.address != null) address!.cep;
+  }
+
+  final ModelAnnouncement? modelAnnouncement;
+
   ObservableList images = ObservableList();
 
   @observable
@@ -144,20 +156,19 @@ abstract class _AnnouncementStoreControllerBase with Store {
 
   @action
   Future<void> _send() async {
-    final createdAnnouncement = ModelAnnouncement();
-    createdAnnouncement.title = title;
-    createdAnnouncement.description = description;
-    createdAnnouncement.category = category!;
-    createdAnnouncement.price = priceText;
-    createdAnnouncement.hidePhone = hidePhone;
-    createdAnnouncement.images = images;
-    createdAnnouncement.address = address!;
+    modelAnnouncement!.title = title;
+    modelAnnouncement!.description = description;
+    modelAnnouncement!.category = category!;
+    modelAnnouncement!.price = priceText;
+    modelAnnouncement!.hidePhone = hidePhone;
+    modelAnnouncement!.images = images;
+    modelAnnouncement!.address = address!;
     // createdAnnouncement.user = GetIt.I<UserManagerStoreController>().user!;
 
     loading = true;
     try {
       await AnnouncementRepository()
-          .save(modelAnnouncement: createdAnnouncement);
+          .save(modelAnnouncement: modelAnnouncement!);
       saveAnnouncement = true;
     } catch (e) {
       error = e.toString();

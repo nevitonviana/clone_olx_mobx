@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
+import 'package:olx_clone/models/model_announcement/model_announcement.dart';
+import 'package:olx_clone/screens/my_ads/my_ads_screen.dart';
 
 import '/components/custom_drawer/custom_drawer.dart';
 import '/components/error_box/error_box.dart';
@@ -15,21 +17,38 @@ import 'components/hide_phone_field.dart';
 import 'components/images_field.dart';
 
 class AnnouncementScreen extends StatefulWidget {
-  const AnnouncementScreen({Key? key}) : super(key: key);
+  final ModelAnnouncement? modelAnnouncement;
+
+  const AnnouncementScreen({Key? key, this.modelAnnouncement})
+      : super(key: key);
 
   @override
   State<AnnouncementScreen> createState() => _AnnouncementScreenState();
 }
 
 class _AnnouncementScreenState extends State<AnnouncementScreen> {
-  final AnnouncementStoreController _announcementStoreController =
-      AnnouncementStoreController();
+  _AnnouncementScreenState({ModelAnnouncement? modelAnnouncement})
+      : _announcementStoreController = AnnouncementStoreController(
+            modelAnnouncement: modelAnnouncement ?? ModelAnnouncement());
+
+  final AnnouncementStoreController _announcementStoreController;
+
+  bool editing = false;
 
   @override
   void initState() {
     super.initState();
     when((_) => _announcementStoreController.saveAnnouncement, () {
-      GetIt.I<PageStoreController>().setPage(0);
+      if (editing)
+        Navigator.of(context).pop(true);
+      else {
+        GetIt.I<PageStoreController>().setPage(0);
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => MyAdsScreen(),
+          ),
+        );
+      }
     });
   }
 

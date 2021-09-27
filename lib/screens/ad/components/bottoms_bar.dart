@@ -11,6 +11,8 @@ class BottomsBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // if(announcementStoreController.)
+    //desativar button
     return Positioned(
       bottom: 0,
       left: 0,

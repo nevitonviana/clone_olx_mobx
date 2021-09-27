@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:olx_clone/screens/my_ads/my_ads.dart';
+import 'package:olx_clone/screens/my_ads/my_ads_screen.dart';
 
 import '/components/custom_drawer/custom_drawer.dart';
 

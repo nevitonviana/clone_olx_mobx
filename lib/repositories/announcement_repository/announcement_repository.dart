@@ -19,6 +19,8 @@ class AnnouncementRepository {
       ..set(keyUserId, modelAnnouncement.user!.id);
 
     final announcementObject = ParseObject(keyAdTable);
+    if (modelAnnouncement.id != null)
+      announcementObject.objectId = modelAnnouncement.id;
 
     final parseAcl = ParseACL(owner: parseUser);
     parseAcl.setPublicReadAccess(allowed: true);
@@ -48,12 +50,6 @@ class AnnouncementRepository {
           ..set(keyCategoryId, modelAnnouncement.category!.id));
 
     final response = await announcementObject.save();
-    print(99999999999999);
-    print(response.success);
-    print(response.result);
-    print(response.statusCode);
-    print(response.error);
-
     if (!response.success) {
       return Future.error(
           ParseErrors.getDescription(response.error!.code).toString());

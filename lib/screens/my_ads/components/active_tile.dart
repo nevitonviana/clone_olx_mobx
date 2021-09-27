@@ -2,19 +2,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '/models/model_announcement/model_announcement.dart';
+import '/screens/announcement/announcement_screen.dart';
+import '/stores/myads_Store/myads_Store.dart';
 
 class ActiveTile extends StatelessWidget {
   final ModelAnnouncement modelAnnouncement;
+  final MyAdsStoreController myAdsStoreController;
 
-  const ActiveTile({Key? key, required this.modelAnnouncement})
+  const ActiveTile(
+      {Key? key,
+      required this.modelAnnouncement,
+      required this.myAdsStoreController})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final List<MenuChoice> choice = [
       MenuChoice(index: 0, title: "Editar", iconData: Icons.edit),
-      MenuChoice(index: 0, title: "Já vendi", iconData: Icons.thumb_up_alt),
-      MenuChoice(index: 0, title: "Deleta", iconData: Icons.delete_forever),
+      MenuChoice(index: 1, title: "Já vendi", iconData: Icons.thumb_up_alt),
+      MenuChoice(index: 2, title: "Deleta", iconData: Icons.delete_forever),
     ];
 
     return Card(
@@ -27,7 +33,7 @@ class ActiveTile extends StatelessWidget {
             AspectRatio(
               aspectRatio: 1,
               child: Image.network(
-                modelAnnouncement.images!.first,
+                modelAnnouncement.images?.first,
               ),
             ),
             const SizedBox(
@@ -46,10 +52,10 @@ class ActiveTile extends StatelessWidget {
                       style: TextStyle(fontWeight: FontWeight.w700),
                     ),
                     Text(
-                      modelAnnouncement.price.toString(),
+                      modelAnnouncement.price!,
                     ),
                     Text(
-                      "${modelAnnouncement.views}",
+                      "{announcementStoreController.views}",
                       style: TextStyle(
                         fontSize: 11,
                         color: Colors.grey[800],
@@ -65,6 +71,7 @@ class ActiveTile extends StatelessWidget {
                   onSelected: (value) {
                     switch (value.index) {
                       case 0:
+                        _editAd(context);
                         break;
                       case 1:
                         break;
@@ -108,6 +115,17 @@ class ActiveTile extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _editAd(BuildContext context) async {
+    final success = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => AnnouncementScreen(
+          modelAnnouncement: modelAnnouncement,
+        ),
+      ),
+    );
+    if (success != null && success) myAdsStoreController.refresh();
   }
 }
 
