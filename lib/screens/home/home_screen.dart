@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
+import '/components/empty_card/empty_card.dart';
 import '/components/custom_drawer/custom_drawer.dart';
 import '/stores/home_store/home_store.dart';
 import 'components/ad_tile.dart';
@@ -121,29 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     }
                     if (_homeStoreController.adList.isEmpty) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Icon(
-                              Icons.border_all_sharp,
-                              color: Colors.white,
-                              size: 100,
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            Text(
-                              "Humm.. Nenhum anuncio encontrado!!",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
+                      return EmptyCard(text: "nenhum anuncio encontrado ");
                     }
                     return ListView.builder(
                       controller: scrollController,

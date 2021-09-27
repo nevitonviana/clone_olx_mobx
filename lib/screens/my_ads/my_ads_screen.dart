@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:olx_clone/stores/myads_Store/myads_Store.dart';
 
+import '/components/empty_card/empty_card.dart';
+import '/stores/myads_Store/myads_Store.dart';
 import 'components/active_tile.dart';
 import 'components/pending_tile.dart';
 import 'components/sold_tile.dart';
@@ -55,7 +56,8 @@ class _MyAdsScreenState extends State<MyAdsScreen>
             controller: _tabController,
             children: [
               Observer(builder: (_) {
-                if (_myAdsStoreController.activeAds.isEmpty) return Container();
+                if (_myAdsStoreController.activeAds.isEmpty)
+                  return EmptyCard(text: "Você não possui num anuncio ativo");
                 return ListView.builder(
                   itemCount: _myAdsStoreController.activeAds.length,
                   itemBuilder: (_, index) => ActiveTile(
@@ -66,7 +68,8 @@ class _MyAdsScreenState extends State<MyAdsScreen>
               }),
               Observer(builder: (_) {
                 if (_myAdsStoreController.pendingAds.isEmpty)
-                  return Container();
+                  return EmptyCard(
+                      text: "Você não possui num anuncio pendente");
                 return ListView.builder(
                   itemCount: _myAdsStoreController.pendingAds.length,
                   itemBuilder: (_, index) => PendingTile(
@@ -75,7 +78,8 @@ class _MyAdsScreenState extends State<MyAdsScreen>
                 );
               }),
               Observer(builder: (_) {
-                if (_myAdsStoreController.soldAds.isEmpty) return Container();
+                if (_myAdsStoreController.soldAds.isEmpty)
+                  return EmptyCard(text: "Você não possui num anuncio Vendio");
                 return ListView.builder(
                   itemCount: _myAdsStoreController.soldAds.length,
                   itemBuilder: (_, index) => SoldTile(
