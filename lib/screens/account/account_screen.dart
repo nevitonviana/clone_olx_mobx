@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:olx_clone/screens/my_ads/my_ads_screen.dart';
 
 import '/components/custom_drawer/custom_drawer.dart';
+import '/screens/edit_account/edit_account_screen.dart';
+import '/screens/my_ads/my_ads_screen.dart';
 
 class AccountScreen extends StatelessWidget {
   const AccountScreen({Key? key}) : super(key: key);
@@ -53,7 +54,9 @@ class AccountScreen extends StatelessWidget {
                     Align(
                       alignment: Alignment.topRight,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (_) => EditAccountScreen())),
                         child: Text(
                           "EDITAR",
                           style: TextStyle(
