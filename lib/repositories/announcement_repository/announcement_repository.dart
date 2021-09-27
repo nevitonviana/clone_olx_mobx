@@ -173,4 +173,15 @@ class AnnouncementRepository {
       return Future.error(ParseErrors.getDescription(response.error!.code)!);
     }
   }
+
+  Future<void> delete({required ModelAnnouncement modelAnnouncement}) async {
+    final parseObject = ParseObject(keyAdTable)
+      ..set(keyAdId, modelAnnouncement.id);
+    parseObject.set(keyAdStatus, AnnouncementStatus.DELETE);
+
+    final response = await parseObject.save();
+    if (!response.success) {
+      return Future.error(ParseErrors.getDescription(response.error!.code)!);
+    }
+  }
 }

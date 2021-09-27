@@ -80,6 +80,7 @@ class _MyAdsScreenState extends State<MyAdsScreen>
                   itemCount: _myAdsStoreController.soldAds.length,
                   itemBuilder: (_, index) => SoldTile(
                     modelAnnouncement: _myAdsStoreController.allAds![index],
+                    myAdsStoreController: _myAdsStoreController,
                   ),
                 );
               }),

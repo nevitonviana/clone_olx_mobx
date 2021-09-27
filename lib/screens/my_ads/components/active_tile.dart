@@ -77,6 +77,7 @@ class ActiveTile extends StatelessWidget {
                         _soldAd(context);
                         break;
                       case 2:
+                        _deleteAd(context);
                         break;
                     }
                   },
@@ -144,6 +145,32 @@ Future<void> _soldAd(BuildContext context) async {
         TextButton(
             onPressed: () {
               Navigator.of(context).pop();
+              //myAdsStoreController.soldAds
+            },
+            child: Text(
+              "Sim",
+              style: TextStyle(color: Colors.purple),
+            )),
+      ],
+    ),
+  );
+}
+
+Future<void> _deleteAd(BuildContext context) async {
+  showDialog(
+    context: context,
+    builder: (_) => AlertDialog(
+      title: Text("excluir"),
+      content: Text("Confirmar a exclusão de {modelAnnouncement.title}"),
+      actions: [
+        TextButton(
+          onPressed: Navigator.of(context).pop,
+          child: Text("Não"),
+        ),
+        TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              //myAdsStoreController.deleteAds
             },
             child: Text(
               "Sim",
