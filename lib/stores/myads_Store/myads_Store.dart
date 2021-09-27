@@ -46,4 +46,11 @@ abstract class _MyAdsStoreControllerBase with Store {
   bool loading = false;
 
   void refresh() => _getMyAds();
+
+  void soldAd() async {
+    loading = true;
+    await AnnouncementRepository().sold(modelAnnouncement: ModelAnnouncement());
+    refresh();
+    loading = false;
+  }
 }

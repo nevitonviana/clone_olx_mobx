@@ -74,6 +74,7 @@ class ActiveTile extends StatelessWidget {
                         _editAd(context);
                         break;
                       case 1:
+                        _soldAd(context);
                         break;
                       case 2:
                         break;
@@ -127,6 +128,30 @@ class ActiveTile extends StatelessWidget {
     );
     if (success != null && success) myAdsStoreController.refresh();
   }
+}
+
+Future<void> _soldAd(BuildContext context) async {
+  showDialog(
+    context: context,
+    builder: (_) => AlertDialog(
+      title: Text("Vendido"),
+      content: Text("Confirmar a vendo de {modelAnnouncement.title}"),
+      actions: [
+        TextButton(
+          onPressed: Navigator.of(context).pop,
+          child: Text("Não"),
+        ),
+        TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text(
+              "Sim",
+              style: TextStyle(color: Colors.purple),
+            )),
+      ],
+    ),
+  );
 }
 
 class MenuChoice {
