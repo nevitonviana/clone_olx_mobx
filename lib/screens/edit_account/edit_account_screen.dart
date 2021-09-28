@@ -1,14 +1,18 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:toggle_switch/toggle_switch.dart';
+
+import '/stores/edit_account_store/edit_account_store.dart';
 
 class EditAccountScreen extends StatelessWidget {
   const EditAccountScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List isSelected = [];
+    final EditAccountStoreController _editAccountStoreController =
+        EditAccountStoreController();
     return Scaffold(
       appBar: AppBar(
         title: Text("Edtar Conta"),
@@ -30,6 +34,7 @@ class EditAccountScreen extends StatelessWidget {
                 children: [
                   LayoutBuilder(builder: (_, contrsints) {
                     return ToggleSwitch(
+                      onToggle: _editAccountStoreController.setUserType,
                       minWidth: contrsints.biggest.width / 2.01,
                       labels: ["Particular", "Proffisional"],
                       cornerRadius: 20,
@@ -42,65 +47,85 @@ class EditAccountScreen extends StatelessWidget {
                     );
                   }),
                   const SizedBox(height: 8),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      isDense: true,
-                      label: Text("Nome *"),
-                    ),
-                  ),
+                  Observer(builder: (_) {
+                    return TextFormField(
+                      onChanged: _editAccountStoreController.setName,
+                      decoration: InputDecoration(
+                        errorText: _editAccountStoreController.nameError,
+                        border: OutlineInputBorder(),
+                        isDense: true,
+                        label: Text("Nome *"),
+                      ),
+                    );
+                  }),
                   const SizedBox(height: 8),
-                  TextFormField(
-                    inputFormatters: [
-                      FilteringTextInputFormatter.digitsOnly,
-                      TelefoneInputFormatter(),
-                    ],
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      isDense: true,
-                      label: Text("Telefone *"),
-                    ),
-                  ),
+                  Observer(builder: (_) {
+                    return TextFormField(
+                      onChanged: _editAccountStoreController.setPhone,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        TelefoneInputFormatter(),
+                      ],
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        errorText: _editAccountStoreController.phoneError,
+                        border: OutlineInputBorder(),
+                        isDense: true,
+                        label: Text("Telefone *"),
+                      ),
+                    );
+                  }),
                   const SizedBox(height: 8),
-                  TextFormField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      isDense: true,
-                      label: Text("Nova Senha "),
-                    ),
-                  ),
+                  Observer(builder: (_) {
+                    return TextFormField(
+                      onChanged: _editAccountStoreController.setPassword1,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        errorText: _editAccountStoreController.passwordError,
+                        border: OutlineInputBorder(),
+                        isDense: true,
+                        label: Text("Nova Senha "),
+                      ),
+                    );
+                  }),
                   const SizedBox(height: 8),
-                  TextFormField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      isDense: true,
-                      label: Text("Repetir Senha "),
-                    ),
-                  ),
+                  Observer(builder: (_) {
+                    return TextFormField(
+                      onChanged: _editAccountStoreController.setPassword2,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        errorText: _editAccountStoreController.passwordError,
+                        border: OutlineInputBorder(),
+                        isDense: true,
+                        label: Text("Repetir Senha "),
+                      ),
+                    );
+                  }),
                   const SizedBox(height: 13),
-                  SizedBox(
-                    height: 40,
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.orangeAccent),
-                        textStyle: MaterialStateProperty.all(
-                          TextStyle(color: Colors.white),
-                        ),
-                        elevation: MaterialStateProperty.all(0),
-                        shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+                  Observer(builder: (_) {
+                    return SizedBox(
+                      height: 40,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.orangeAccent),
+                          textStyle: MaterialStateProperty.all(
+                            TextStyle(color: Colors.white),
+                          ),
+                          elevation: MaterialStateProperty.all(0),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
                           ),
                         ),
+                        onPressed: _editAccountStoreController.isFormValid
+                            ? () {}
+                            : null,
+                        child: Text("Salvar"),
                       ),
-                      onPressed: () {},
-                      child: Text("Salvar"),
-                    ),
-                  ),
+                    );
+                  }),
                   const SizedBox(height: 6),
                   SizedBox(
                     height: 40,

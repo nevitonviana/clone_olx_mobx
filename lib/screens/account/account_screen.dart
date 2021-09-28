@@ -7,8 +7,10 @@ import '/screens/my_ads/my_ads_screen.dart';
 class AccountScreen extends StatelessWidget {
   const AccountScreen({Key? key}) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       drawer: CustomDrawer(),
       appBar: AppBar(

@@ -32,10 +32,26 @@ mixin _$MyAdsStoreController on _MyAdsStoreControllerBase, Store {
     });
   }
 
+  final _$loadingAtom = Atom(name: '_MyAdsStoreControllerBase.loading');
+
+  @override
+  bool get loading {
+    _$loadingAtom.reportRead();
+    return super.loading;
+  }
+
+  @override
+  set loading(bool value) {
+    _$loadingAtom.reportWrite(value, super.loading, () {
+      super.loading = value;
+    });
+  }
+
   @override
   String toString() {
     return '''
 allAds: ${allAds},
+loading: ${loading},
 activeAds: ${activeAds}
     ''';
   }
