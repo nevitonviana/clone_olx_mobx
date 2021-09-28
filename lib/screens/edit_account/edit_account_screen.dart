@@ -32,23 +32,31 @@ class EditAccountScreen extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  LayoutBuilder(builder: (_, contrsints) {
-                    return ToggleSwitch(
-                      onToggle: _editAccountStoreController.setUserType,
-                      minWidth: contrsints.biggest.width / 2.01,
-                      labels: ["Particular", "Proffisional"],
-                      cornerRadius: 20,
-                      activeFgColor: Colors.white,
-                      inactiveBgColor: Colors.grey,
-                      inactiveFgColor: Colors.white,
-                      activeBgColor: [Colors.purple],
-                      initialLabelIndex: 1,
-                      totalSwitches: 2,
+                  Observer(builder: (_) {
+                    return IgnorePointer(
+                      ignoring: _editAccountStoreController.loading,
+                      child: LayoutBuilder(builder: (_, contrsints) {
+                        return ToggleSwitch(
+                          onToggle: _editAccountStoreController.setUserType,
+                          minWidth: contrsints.biggest.width / 2.01,
+                          labels: ["Particular", "Profissional"],
+                          cornerRadius: 20,
+                          activeFgColor: Colors.white,
+                          inactiveBgColor: Colors.grey,
+                          inactiveFgColor: Colors.white,
+                          activeBgColor: [Colors.purple],
+                          initialLabelIndex:
+                              _editAccountStoreController.userType?.index ?? 0,
+                          totalSwitches: 2,
+                        );
+                      }),
                     );
                   }),
                   const SizedBox(height: 8),
                   Observer(builder: (_) {
                     return TextFormField(
+                      enabled: !_editAccountStoreController.loading,
+                      initialValue: _editAccountStoreController.name,
                       onChanged: _editAccountStoreController.setName,
                       decoration: InputDecoration(
                         errorText: _editAccountStoreController.nameError,
@@ -61,6 +69,8 @@ class EditAccountScreen extends StatelessWidget {
                   const SizedBox(height: 8),
                   Observer(builder: (_) {
                     return TextFormField(
+                      enabled: !_editAccountStoreController.loading,
+                      initialValue: _editAccountStoreController.phone,
                       onChanged: _editAccountStoreController.setPhone,
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
@@ -78,6 +88,7 @@ class EditAccountScreen extends StatelessWidget {
                   const SizedBox(height: 8),
                   Observer(builder: (_) {
                     return TextFormField(
+                      enabled: !_editAccountStoreController.loading,
                       onChanged: _editAccountStoreController.setPassword1,
                       obscureText: true,
                       decoration: InputDecoration(
@@ -91,6 +102,7 @@ class EditAccountScreen extends StatelessWidget {
                   const SizedBox(height: 8),
                   Observer(builder: (_) {
                     return TextFormField(
+                      enabled: !_editAccountStoreController.loading,
                       onChanged: _editAccountStoreController.setPassword2,
                       obscureText: true,
                       decoration: InputDecoration(
@@ -102,30 +114,32 @@ class EditAccountScreen extends StatelessWidget {
                     );
                   }),
                   const SizedBox(height: 13),
-                  Observer(builder: (_) {
-                    return SizedBox(
-                      height: 40,
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.orangeAccent),
-                          textStyle: MaterialStateProperty.all(
-                            TextStyle(color: Colors.white),
-                          ),
-                          elevation: MaterialStateProperty.all(0),
-                          shape: MaterialStateProperty.all(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
+                  Observer(
+                    builder: (_) {
+                      return SizedBox(
+                        height: 40,
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.orangeAccent),
+                            textStyle: MaterialStateProperty.all(
+                              TextStyle(color: Colors.white),
+                            ),
+                            elevation: MaterialStateProperty.all(0),
+                            shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
                             ),
                           ),
+                          onPressed: _editAccountStoreController.savaPressed,
+                          child: _editAccountStoreController.loading
+                              ? CircularProgressIndicator()
+                              : Text("Salvar"),
                         ),
-                        onPressed: _editAccountStoreController.isFormValid
-                            ? () {}
-                            : null,
-                        child: Text("Salvar"),
-                      ),
-                    );
-                  }),
+                      );
+                    },
+                  ),
                   const SizedBox(height: 6),
                   SizedBox(
                     height: 40,

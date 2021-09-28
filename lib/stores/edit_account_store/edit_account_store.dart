@@ -1,5 +1,8 @@
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
-import 'package:olx_clone/models/user/user.dart';
+
+import '/models/user/user.dart';
+import '/stores/user_manager_store/user_manager_store.dart';
 
 part 'edit_account_store.g.dart';
 
@@ -7,6 +10,16 @@ class EditAccountStoreController = _EditAccountStoreControllerBase
     with _$EditAccountStoreController;
 
 abstract class _EditAccountStoreControllerBase with Store {
+  final UserManagerStoreController userManagerStoreController =
+      GetIt.I<UserManagerStoreController>();
+
+  _EditAccountStoreControllerBase() {
+    final user = userManagerStoreController.user;
+    userType = user?.type;
+    name = user?.name;
+    phone = user?.phone;
+  }
+
   @observable
   UserType? userType;
 
@@ -62,4 +75,19 @@ abstract class _EditAccountStoreControllerBase with Store {
 
   @computed
   bool get isFormValid => nameValid && passwordValid && phoneValid;
+
+  @computed
+  dynamic get savaPressed => (isFormValid && !loading) ? _save : null;
+
+  @observable
+  bool loading = false;
+
+  @action
+  Future<void> _save() async {
+    loading = true;
+    print(333);
+    await Future.delayed(Duration(seconds: 3));
+    print(1111);
+    loading = false;
+  }
 }
