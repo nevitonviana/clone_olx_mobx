@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_slider/carousel_slider.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:olx_clone/stores/favorite_store/favorite_store.dart';
-import 'package:olx_clone/stores/user_manager_store/user_manager_store.dart';
 
 import '/stores/announcement_store/announcement_store.dart';
+import '/stores/favorite_store/favorite_store.dart';
+import '/stores/user_manager_store/user_manager_store.dart';
 import 'components/bottoms_bar.dart';
 import 'components/description_panel.dart';
 import 'components/location_panel.dart';
@@ -31,11 +32,17 @@ class AdScreen extends StatelessWidget {
         actions: [
           // if()de verificação 363
           if (userManagerStoreController.isLoggedIn)
-            IconButton(
-              onPressed: () => favoriteStoreController
-                  .toggleFavorite(announcementStoreController),
-              icon: Icon(Icons.favorite_border_outlined),
-            ),
+            Observer(builder: (_) {
+              return IconButton(
+                onPressed: () => favoriteStoreController
+                    .toggleFavorite(announcementStoreController),
+                icon: Icon(favoriteStoreController.favoriteList.any((element) =>
+                        element.modelAnnouncement!.id ==
+                        announcementStoreController.modelAnnouncement!.id)
+                    ? Icons.favorite_outlined
+                    : Icons.favorite_border_outlined),
+              );
+            }),
         ],
       ),
       body: Stack(
