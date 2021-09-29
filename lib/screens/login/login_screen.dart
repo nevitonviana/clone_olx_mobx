@@ -1,16 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
+import 'package:mobx/mobx.dart';
 
 import '/components/error_box/error_box.dart';
 import '/stores/login_store/login_store.dart';
+import '/stores/user_manager_store/user_manager_store.dart';
 import '../signup/signup_creen.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final LoginStoreController _loginStoreController = LoginStoreController();
+
+  final UserManagerStoreController userManagerStoreController =
+      GetIt.I<UserManagerStoreController>();
+
+  @override
+  void initState() {
+    super.initState();
+    when((_) => userManagerStoreController.user != null, () {
+      Navigator.of(context).pop();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final LoginStoreController _loginStoreController = LoginStoreController();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Entrar"),

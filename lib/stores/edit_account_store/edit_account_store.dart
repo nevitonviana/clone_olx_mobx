@@ -104,4 +104,6 @@ abstract class _EditAccountStoreControllerBase with Store {
     }
     loading = false;
   }
+
+  void logout() => userManagerStoreController.logout();
 }

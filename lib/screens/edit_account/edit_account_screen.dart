@@ -2,6 +2,8 @@ import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
+import 'package:olx_clone/stores/page_store/page_store.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 import '/stores/edit_account_store/edit_account_store.dart';
@@ -156,7 +158,10 @@ class EditAccountScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        _editAccountStoreController.logout();
+                        GetIt.I<PageStoreController>().setPage(0);
+                      },
                       child: Text("Sair"),
                     ),
                   ),

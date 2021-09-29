@@ -1,7 +1,7 @@
 import 'package:mobx/mobx.dart';
 
-import '/repositories/user_repositories/user_repository.dart';
 import '/models/user/user.dart';
+import '/repositories/user_repositories/user_repository.dart';
 
 part 'user_manager_store.g.dart';
 
@@ -17,7 +17,7 @@ abstract class _UserManagerStoreControllerBase with Store {
   User? user;
 
   @action
-  void setUser(User value) => user = value;
+  void setUser(User? value) => user = value;
 
   @computed
   bool get isLoggedIn => user != null;
@@ -25,5 +25,10 @@ abstract class _UserManagerStoreControllerBase with Store {
   Future<void> _getCurrentUSer() async {
     final user = await UserSignUpRepositories().currentUser();
     setUser(user!);
+  }
+
+  Future<void> logout() async {
+    UserSignUpRepositories().logout();
+    setUser(null);
   }
 }

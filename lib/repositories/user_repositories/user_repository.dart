@@ -85,4 +85,9 @@ class UserSignUpRepositories {
             ParseErrors.getDescription(response.error!.code).toString());
     }
   }
+
+  Future<void> logout() async {
+    final ParseUser parserUSer = await ParseUser.currentUser();
+    await parserUSer.logout();
+  }
 }
