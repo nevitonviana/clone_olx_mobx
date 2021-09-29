@@ -11,8 +11,25 @@ class FavoriteStoreController = _FavoriteStoreControllerBase
     with _$FavoriteStoreController;
 
 abstract class _FavoriteStoreControllerBase with Store {
+  _FavoriteStoreControllerBase() {
+    reaction((_) => userManagerStoreController.isLoggedIn,
+        (_) => _getFavoriteList());
+  }
+
+  final UserManagerStoreController userManagerStoreController =
+      GetIt.I<UserManagerStoreController>();
   ObservableList<AnnouncementStoreController> favoriteList =
       ObservableList<AnnouncementStoreController>();
+
+  @action
+  Future<void> _getFavoriteList() async {
+    try {
+      final favorites = FavoriteRepository()
+          .getFavorite(user: userManagerStoreController.user!);
+
+      // favoriteList.addAll(favorites);
+    } catch (e) {}
+  }
 
   @action
   Future<void> toggleFavorite(
@@ -20,6 +37,7 @@ abstract class _FavoriteStoreControllerBase with Store {
     final UserManagerStoreController userManagerStoreController =
         GetIt.I<UserManagerStoreController>();
     try {
+      favoriteList.clear();
       if (favoriteList.any((element) =>
           element.modelAnnouncement!.id ==
           storeController.modelAnnouncement!.id)) {
