@@ -1,7 +1,7 @@
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
-import '/repositories/parse_errors/parse_errors.dart';
 import '/models/user/user.dart';
+import '/repositories/parse_errors/parse_errors.dart';
 import '/repositories/table_keys.dart';
 
 class UserSignUpRepositories {
@@ -56,6 +56,33 @@ class UserSignUpRepositories {
       }
     } else {
       return null;
+    }
+  }
+
+  Future<void> save(User user) async {
+    final ParseUser parserUSer = await ParseUser.currentUser();
+    if (parserUSer != null) {
+      parserUSer.set<String>(keyUserName, user.name!);
+      parserUSer.set<String>(keyUserPhone, user.phone!);
+      parserUSer.set<int>(keyUserType, user.type!.index);
+      if (user.password != null) {
+        parserUSer.password = user.password;
+      }
+    }
+
+    final response = await parserUSer.save();
+    if (!response.success)
+      return Future.error(
+          ParseErrors.getDescription(response.error!.code).toString());
+
+    if (user.password != null) {
+      await parserUSer.logout();
+      final loginResponse =
+          await ParseUser(user.email, user.password, user.email).login();
+
+      if (!loginResponse.success)
+        return Future.error(
+            ParseErrors.getDescription(response.error!.code).toString());
     }
   }
 }

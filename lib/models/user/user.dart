@@ -5,10 +5,10 @@ enum UserType {
 
 class User {
   final String? id;
-  final String? name;
+  late final String? name;
   final String? email;
-  final String? phone;
-  final String? password;
+  late final String? phone;
+  late final String? password;
   UserType? type;
   DateTime? createdAt;
 

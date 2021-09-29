@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 
 import '/components/custom_drawer/custom_drawer.dart';
 import '/screens/edit_account/edit_account_screen.dart';
 import '/screens/my_ads/my_ads_screen.dart';
+import '/stores/user_manager_store/user_manager_store.dart';
 
 class AccountScreen extends StatelessWidget {
   const AccountScreen({Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       drawer: CustomDrawer(),
       appBar: AppBar(
@@ -30,29 +31,30 @@ class AccountScreen extends StatelessWidget {
                 height: 140,
                 child: Stack(
                   children: [
-                    Align(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            "neviton DEV",
-                            //{GetIt.I<UserManagerStoreController>().user!.name!.toString()}
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.purple,
-                              fontWeight: FontWeight.w900,
+                    Observer(builder: (context) {
+                      return Align(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              "${GetIt.I<UserManagerStoreController>().user!.name!.toString()}",
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.purple,
+                                fontWeight: FontWeight.w900,
+                              ),
                             ),
-                          ),
-                          Text(
-                            "neviotnDev@hotmail.com", //
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey[700],
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
+                            Text(
+                              "neviotnDev@hotmail.com", //
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey[700],
+                              ),
+                            )
+                          ],
+                        ),
+                      );
+                    }),
                     Align(
                       alignment: Alignment.topRight,
                       child: TextButton(

@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
 import '/models/user/user.dart';
+import '/repositories/user_repositories/user_repository.dart';
 import '/stores/user_manager_store/user_manager_store.dart';
 
 part 'edit_account_store.g.dart';
@@ -14,11 +15,13 @@ abstract class _EditAccountStoreControllerBase with Store {
       GetIt.I<UserManagerStoreController>();
 
   _EditAccountStoreControllerBase() {
-    final user = userManagerStoreController.user;
+    user = userManagerStoreController.user;
     userType = user?.type;
     name = user?.name;
     phone = user?.phone;
   }
+
+  User? user;
 
   @observable
   UserType? userType;
@@ -85,9 +88,20 @@ abstract class _EditAccountStoreControllerBase with Store {
   @action
   Future<void> _save() async {
     loading = true;
-    print(333);
-    await Future.delayed(Duration(seconds: 3));
-    print(1111);
+    user!.name = name;
+    user!.phone = phone;
+    user!.type = userType;
+
+    if (password1.isNotEmpty)
+      user!.password = password1;
+    else
+      user!.password = null;
+    try {
+      await UserSignUpRepositories().save(user!);
+      userManagerStoreController.setUser(user!);
+    } catch (e) {
+      print(e);
+    }
     loading = false;
   }
 }
