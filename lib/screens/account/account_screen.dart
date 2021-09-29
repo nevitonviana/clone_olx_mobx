@@ -3,9 +3,10 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 import '/components/custom_drawer/custom_drawer.dart';
-import '/screens/edit_account/edit_account_screen.dart';
-import '/screens/my_ads/my_ads_screen.dart';
 import '/stores/user_manager_store/user_manager_store.dart';
+import '../edit_account/edit_account_screen.dart';
+import '../favorite/favorite_screen.dart';
+import '../my_ads/my_ads_screen.dart';
 
 class AccountScreen extends StatelessWidget {
   const AccountScreen({Key? key}) : super(key: key);
@@ -87,7 +88,9 @@ class AccountScreen extends StatelessWidget {
                 ),
               ),
               ListTile(
-                onTap: () {},
+                onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_) => FavoriteScreen(hideDrawer: false),
+                )),
                 title: Text(
                   "Favoritos",
                   style: TextStyle(
