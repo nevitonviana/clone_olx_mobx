@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_slider/carousel_slider.dart';
+import 'package:get_it/get_it.dart';
+import 'package:olx_clone/stores/favorite_store/favorite_store.dart';
+import 'package:olx_clone/stores/user_manager_store/user_manager_store.dart';
 
 import '/stores/announcement_store/announcement_store.dart';
 import 'components/bottoms_bar.dart';
@@ -16,11 +19,24 @@ class AdScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final UserManagerStoreController userManagerStoreController =
+        GetIt.I<UserManagerStoreController>();
+    final FavoriteStoreController favoriteStoreController =
+        GetIt.I<FavoriteStoreController>();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text("Anuncios"),
         centerTitle: true,
+        actions: [
+          // if()de verificação 363
+          if (userManagerStoreController.isLoggedIn)
+            IconButton(
+              onPressed: () => favoriteStoreController
+                  .toggleFavorite(announcementStoreController),
+              icon: Icon(Icons.favorite_border_outlined),
+            ),
+        ],
       ),
       body: Stack(
         children: [
