@@ -1,7 +1,9 @@
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
 import '/models/category/category.dart';
 import '/repositories/category_repository/category_repository.dart';
+import '../connectivity_store/connectivity_store.dart';
 
 part 'category_store.g.dart';
 
@@ -9,8 +11,15 @@ class CategoryStoreController = _CategoryStoreControllerBase
     with _$CategoryStoreController;
 
 abstract class _CategoryStoreControllerBase with Store {
+  final ConnectivityStoreController _connectivityStoreController =
+      GetIt.I<ConnectivityStoreController>();
+
   _CategoryStoreControllerBase() {
-    _loadCategories();
+    autorun((_) {
+      if (_connectivityStoreController.connected && categoryList.isEmpty) {
+        _loadCategories();
+      }
+    });
   }
 
   ObservableList<Category> categoryList = ObservableList<Category>();

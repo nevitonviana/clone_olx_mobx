@@ -1,17 +1,23 @@
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 
 import '/models/category/category.dart';
 import '/models/model_announcement/model_announcement.dart';
 import '/repositories/announcement_repository/announcement_repository.dart';
-import '/stores/filter_store/filter_store.dart';
+import '../connectivity_store/connectivity_store.dart';
+import '../filter_store/filter_store.dart';
 
 part 'home_store.g.dart';
 
 class HomeStoreController = _HomeStoreControllerBase with _$HomeStoreController;
 
 abstract class _HomeStoreControllerBase with Store {
+  final ConnectivityStoreController _connectivityStoreController =
+      GetIt.I<ConnectivityStoreController>();
+
   _HomeStoreControllerBase() {
     autorun((_) async {
+      _connectivityStoreController.connected;
       try {
         setLoading(true);
         final newAnnouncement = await AnnouncementRepository().getHomeAdList(

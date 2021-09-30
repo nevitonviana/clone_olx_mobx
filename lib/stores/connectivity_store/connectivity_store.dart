@@ -13,7 +13,6 @@ abstract class _ConnectivityStoreControllerBase with Store {
 
   void _setupListener() async {
     final bool isConnected = await InternetConnectionChecker().hasConnection;
-
     setConnected(isConnected);
   }
 
