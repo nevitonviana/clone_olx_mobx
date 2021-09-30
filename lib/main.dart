@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'initializeParse.dart';
 import 'screens/base/base_screen.dart';
 import 'stores/category_store/category_store.dart';
+import 'stores/connectivity_store/connectivity_store.dart';
 import 'stores/favorite_store/favorite_store.dart';
 import 'stores/home_store/home_store.dart';
 import 'stores/page_store/page_store.dart';
@@ -18,6 +19,7 @@ void main() async {
 }
 
 void setupLocators() {
+  GetIt.I.registerSingleton(ConnectivityStoreController());
   GetIt.I.registerSingleton(PageStoreController());
   GetIt.I.registerSingleton(HomeStoreController());
   GetIt.I.registerSingleton(UserManagerStoreController());
