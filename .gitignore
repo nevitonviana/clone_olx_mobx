@@ -14,6 +14,8 @@
 *.ipr
 *.iws
 .idea/
+android
+ios
 
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so this line
@@ -30,8 +32,6 @@
 .pub-cache/
 .pub/
 build/
-android/
-ios/
 .dart_tool
 lib/initializeParse.dart
 
